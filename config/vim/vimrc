@@ -1,0 +1,58 @@
+"autocmd BufNewFile *.c,*.cc,*.cpp,*.py,*.sh,*.java exec ":call SetTitle()"                                                                                              
+"
+"func SetInfo()
+"    call setline(2, "   File Name   : ".expand("%"))
+"    call setline(3, "   Created on  : ".strftime("%m-%d-%Y"))
+"    call setline(4, "   Author      : spxcds")
+"endfunc
+"
+"func SetTitle()
+"    if &filetype == 'cpp' || &filetype == 'c' || &filetype == 'java'
+"        call setline(1, "/******************************")
+"        call SetInfo()
+"        call setline(5, "*******************************/")
+"        call setline(6, "")
+"    endif
+"
+"    if &filetype == 'python'
+"        call setline(1, "\"\"\"")
+"        call SetInfo()
+"        call setline(5, "\"\"\"")
+"        call setline(6, "\#coding=utf8")
+"        call setline(7,"")
+"    endif
+"endfunc
+
+filetype plugin indent on
+syntax on
+filetype on
+set background=dark
+set t_Co=256
+colorscheme molokai
+set nu
+set hlsearch
+set expandtab
+set syntax=on
+set tabstop=4
+set shiftwidth=4
+set smarttab
+set smartindent
+set showmatch
+set matchtime=0
+set report=0
+let &termencoding=&encoding
+set fileencodings=utf-8,gbk,utf-16,big5
+:inoremap ( ()<ESC>i
+:inoremap ) <c-r>=ClosePair(')')<CR>
+:inoremap { {}<ESC>i
+:inoremap {<CR> {<CR>}<ESC>O
+:inoremap } <c-r>=ClosePair('}')<CR>
+:inoremap [ []<ESC>i
+:inoremap ] <c-r>=ClosePair(']')<CR>
+function ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endfunction
